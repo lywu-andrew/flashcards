@@ -17,7 +17,6 @@ public final class Main {
     }
 
     public static void main(String[] args) throws IOException {
-        // TODO: set up options, extract command line arguments, fill in the relevant objects based on it.
         CardStore cards = new CardLoader().loadCardsFromFile(new File("cards/designpatterns.csv"));
         CardDeck cardDeck = new CardDeck(cards.getAllCards(), new CardShuffler());
         new UI().studyCards(cardDeck);
