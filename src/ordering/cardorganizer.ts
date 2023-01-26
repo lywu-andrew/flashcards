@@ -36,8 +36,18 @@ function newCombinedCardOrganizer (cardOrganizers: CardOrganizer[]): CardOrganiz
   }
 }
 
+/**
+ * A class that sorts a list of {@link CardStatus} cards by putting the incorrectly answered cards first.
+ */
 function newRecentMistakesFirstSorter (): CardOrganizer {
   return {
+
+    /**
+         * Orders the cards so that those that were answered incorrectly on the last answer appear first. This is a a stable ordering.
+         *
+         * @param cards The {@link CardStatus} objects to order.
+         * @return The final ordered list of cards.
+         */
     reorganize: function (cards: CardStatus[]): CardStatus[] {
       const status = cards.slice()
       const prevFailures: CardStatus[] = []
