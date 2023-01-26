@@ -22,7 +22,6 @@ import joptsimple.OptionSpec;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 public final class Main {
 
@@ -46,10 +45,7 @@ public final class Main {
                             "That is, it prompts with the card's answer and asks the user to " +
                             "provide the corresponding question. Default: false" );
 
-        Scanner scanner = new Scanner(System.in);
-        String input = scanner.nextLine();
-        String[] splitInput = input.split(" ");
-        OptionSet options = parser.parse(splitInput);
+        OptionSet options = parser.parse(args);
 
         if (options.has("help")) {
             parser.printHelpOn( System.out );
@@ -72,24 +68,20 @@ public final class Main {
                 } else if (orderValue.equals("recent-mistakes-first")) {
                     organizer = new RecentMistakesFirstSorter();
                 } else {
-                    scanner.close();
                     throw new InvalidOrderValueException("Invalid order value:" + orderValue);
                 }
                 int repetitionValue = options.valueOf(repetitions);
                 if (repetitionValue < 1) {
-                    scanner.close();
                     throw new InvalidRepetitionValueException("Repetition value cannot be less than 1: " + repetitionValue);
                 } else {
                     List<CardOrganizer> organizers = new ArrayList<>();
                     organizers.add(organizer);
                     organizers.add(new RepeatingCardOrganizer(repetitionValue));
                     organizer = new CombinedCardOrganizer(organizers);
-                    System.out.println("hi");
                 }
     
                 CardDeck cardDeck = new CardDeck(cards.getAllCards(), organizer);
                 new UI().studyCards(cardDeck);
-                scanner.close();
             } catch (IOException ioe){
                 System.out.println("File not found, check the file path again.");
             } catch (InvalidOrderValueException iove) {
