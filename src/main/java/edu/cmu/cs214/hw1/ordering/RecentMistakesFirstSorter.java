@@ -11,12 +11,10 @@ import java.util.List;
 public class RecentMistakesFirstSorter implements CardOrganizer {
 
     /**
-     * Applies each {@link CardOrganizer} instance to the provided collection of cards. This method makes no guarantees
-     * about the order in which the underlying sorters are invoked; the final order may be dependent on this order when
-     * conflicting priorities are involved.
+     * Orders the cards so that those that were answered incorrectly on the last answer appear first. This is a a stable ordering.
      *
      * @param cards The {@link CardStatus} objects to order.
-     * @return The final, filtered and ordered list of cards.
+     * @return The final ordered list of cards.
      */
     @Override
     public List<CardStatus> reorganize(List<CardStatus> cards) {
