@@ -36,4 +36,32 @@ function newCombinedCardOrganizer (cardOrganizers: CardOrganizer[]): CardOrganiz
   }
 }
 
-export { CardOrganizer, newCombinedCardOrganizer }
+function newRecentMistakesFirstSorter (): CardOrganizer {
+  return {
+    reorganize: function (cards: CardStatus[]): CardStatus[] {
+      const status = cards.slice()
+      const prevFailures: CardStatus[] = []
+      let i = 0
+      let size = cards.length
+      while (i < size) {
+        const card = status[i]
+        const results = card.getResults()
+        if (results.length === 0) {
+          continue
+        } else {
+          const lastResult = results[results.length - 1]
+          if (!lastResult) {
+            status.splice(i, 1)
+            prevFailures.push(card)
+            size -= 1
+          } else {
+            i += 1
+          }
+        }
+      }
+      return prevFailures.concat(status)
+    }
+  }
+}
+
+export { CardOrganizer, newCombinedCardOrganizer, newRecentMistakesFirstSorter }

@@ -1,6 +1,6 @@
 import { loadCards } from './data/store'
 import { newCardDeck } from './ordering/cardproducer'
-import { newCardShuffler } from './ordering/prioritization/cardshuffler'
+import { newRecentMistakesFirstSorter } from './ordering/cardorganizer'
 import { newUI } from './ui'
 
 // TODOs
@@ -22,7 +22,7 @@ import { newUI } from './ui'
 
 const cardDeck = newCardDeck(
   loadCards('cards/designpatterns.csv').getAllCards(),
-  newCardShuffler()
+  newRecentMistakesFirstSorter()
 )
 
 newUI().studyCards(cardDeck)
