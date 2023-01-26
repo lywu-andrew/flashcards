@@ -1,6 +1,7 @@
-package edu.cmu.cs214.hw1.ordering;
+package edu.cmu.cs214.hw1.ordering.prioritization;
 
 import edu.cmu.cs214.hw1.cards.CardStatus;
+import edu.cmu.cs214.hw1.ordering.CardOrganizer;
 
 import java.util.ArrayList;
 import java.util.List;
