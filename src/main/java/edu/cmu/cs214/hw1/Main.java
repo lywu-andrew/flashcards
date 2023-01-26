@@ -83,7 +83,7 @@ public final class Main {
                 CardDeck cardDeck = new CardDeck(cards.getAllCards(), organizer);
                 new UI().studyCards(cardDeck);
             } catch (IOException ioe){
-                System.out.println("File not found, check the file path again.");
+                System.out.println("Couldn't read the file.");
             } catch (InvalidOrderValueException iove) {
                 System.out.println("Please input a valid type of ordering.");
             } catch (InvalidRepetitionValueException iove) {
