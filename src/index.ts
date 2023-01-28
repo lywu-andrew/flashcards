@@ -17,15 +17,20 @@ pkg
   .demandCommand(1)
   .options({
     order: {
-      description: 'The type of ordering to use, default "random" [choices: "random", "worst-first", "recent-mistakes-first"]',
+      description: 'The type of ordering to use, default "random"' +
+                   '[choices: "random", "worst-first", "recent-mistakes-first"]',
       requiresArg: true
     },
     repetitions: {
-      description: 'The number of times to each card should be answered successfully. If not provided, every card is presented once, regardless of the correctness of the answer.',
+      description: 'The number of times to each card should be answered successfully. ' +
+                   'If not provided, every card is presented once, ' +
+                   'regardless of the correctness of the answer.',
       requiresArg: true
     },
     invertCards: {
-      description: 'If set, it flips answer and question for each card. That is, it prompts with the card\'s answer and asks the user to provide the corresponding question. Default: false'
+      description: 'If set, it flips answer and question for each card. ' +
+                   'That is, it prompts with the card\'s answer and asks the ' +
+                   'user to provide the corresponding question. Default: false'
     }
   })
   .default({ order: 'random', repetitions: 1 })
