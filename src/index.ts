@@ -40,10 +40,8 @@ const orderString = argv.order as string
 try {
   if (orderString === 'worst-first') {
     organizer = newMostMistakesFirstSorter()
-    console.log('wrong')
   } else if (orderString === 'recent-mistakes-first') {
     organizer = newRecentMistakesFirstSorter()
-    console.log('wrong')
   } else if (orderString !== 'random' && orderString !== undefined) {
     throw new Error('Invalid order value: ' + orderString)
   }
