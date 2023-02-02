@@ -17,6 +17,11 @@ If you do not want to follow this specific style guide, feel free to disable ts-
 
 The code uses blocking I/O calls which are not idomatic in Node.js. We will discuss this later in the class.
 
+## Testing Strategy
 
+The tests incorporate the strategy of boundary value analysis, which tests certain values on the boundary
+of valid and invalid inputs. For example, the number of repetitions for a repeater cannot be less than 1, so the tests account for when the user inputs -1, 0, or 1 for the number of repetitions. This technique was chosen because it's much more efficient to test the boundaries than a wide range of values (say -20 to 20). By splitting up the values by invalid and valid ranges and focusing on a few inputs from each of these ranges, we cut out much redundant testing.
+
+## Specification vs structure testing
 
 
