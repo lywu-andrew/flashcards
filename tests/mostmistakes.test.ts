@@ -9,7 +9,15 @@ for (const card of cards) {
 }
 const sorter = newMostMistakesFirstSorter()
 
+function reset (crds: CardStatus[]): CardStatus[] {
+  for (const card of crds) {
+    card.clearResults()
+  }
+  return crds
+}
+
 test('test reorganize: all cards correct', () => {
+  original = reset(original)
   for (const card of original) {
     card.recordResult(true)
   }
@@ -19,7 +27,14 @@ test('test reorganize: all cards correct', () => {
   }
 })
 
+test('test reorganize: no cards', () => {
+  const empty: CardStatus[] = []
+  const reorganized = sorter.reorganize(empty)
+  expect(reorganized.length === 0).toBeTruthy()
+})
+
 test('test reorganize: last card reorganized to first', () => {
+  original = reset(original)
   for (const card of original) {
     card.recordResult(true)
   }
@@ -33,12 +48,13 @@ test('test reorganize: last card reorganized to first', () => {
 })
 
 test('test reorganize: most mistakes reorganized to first', () => {
+  original = reset(original)
   original[cards.length - 1].recordResult(false)
   original[cards.length - 1].recordResult(false)
   original[cards.length - 1].recordResult(false)
+  original[1].recordResult(false)
+  original[1].recordResult(false)
   original[cards.length - 2].recordResult(false)
-  original[1].recordResult(false)
-  original[1].recordResult(false)
   const reorganized = sorter.reorganize(original)
   expect(reorganized[0].getCard().equals(original[cards.length - 1].getCard())).toBeTruthy()
   expect(reorganized[1].getCard().equals(original[1].getCard())).toBeTruthy()
@@ -46,6 +62,7 @@ test('test reorganize: most mistakes reorganized to first', () => {
 })
 
 test('test reorganize: only first card correct', () => {
+  original = reset(original)
   for (const card of original) {
     card.recordResult(false)
   }

@@ -2,7 +2,6 @@ import { newFlashCard } from '../src/cards/flashcard'
 import { newCardStatus } from '../src/cards/cardstatus'
 
 const fc = newFlashCard('Question', 'Answer')
-const cs = newCardStatus(fc)
 
 function arrayEquals (a: boolean[], b: boolean[]): boolean {
   if (a === null || b === null) return false
@@ -16,20 +15,25 @@ function arrayEquals (a: boolean[], b: boolean[]): boolean {
 }
 
 test('test getResults: initially empty results', () => {
+  const cs = newCardStatus(fc)
   expect(arrayEquals(cs.getResults(), [])).toBeTruthy()
 })
 
 test('test recordResults: 1 success', () => {
+  const cs = newCardStatus(fc)
   cs.recordResult(true)
   expect(arrayEquals(cs.getResults(), [true])).toBeTruthy()
 })
 
 test('test recordResults: 1 failure', () => {
+  const cs = newCardStatus(fc)
+  cs.recordResult(true)
   cs.recordResult(false)
   expect(arrayEquals(cs.getResults(), [true, false])).toBeTruthy()
 })
 
 test('test clearResults: clear results', () => {
+  const cs = newCardStatus(fc)
   cs.clearResults()
   expect(arrayEquals(cs.getResults(), [])).toBeTruthy()
 })

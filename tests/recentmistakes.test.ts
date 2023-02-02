@@ -9,7 +9,15 @@ for (const card of cards) {
 }
 const sorter = newRecentMistakesFirstSorter()
 
+function reset (crds: CardStatus[]): CardStatus[] {
+  for (const card of crds) {
+    card.clearResults()
+  }
+  return crds
+}
+
 test('test reorganize: all cards correct', () => {
+  original = reset(original)
   for (const card of original) {
     card.recordResult(true)
   }
@@ -19,7 +27,25 @@ test('test reorganize: all cards correct', () => {
   }
 })
 
+test('test reorganize: all cards incorrect', () => {
+  original = reset(original)
+  for (const card of original) {
+    card.recordResult(false)
+  }
+  const reorganized = sorter.reorganize(original)
+  for (var i = 0; i < original.length; i++) {
+    expect(reorganized[i].getCard().equals(original[i].getCard()))
+  }
+})
+
+test('test reorganize: no cards', () => {
+  const empty: CardStatus[] = []
+  const reorganized = sorter.reorganize(empty)
+  expect(reorganized.length === 0).toBeTruthy()
+})
+
 test('test reorganize: same number of incorrect', () => {
+  original = reset(original)
   for (const card of original) {
     card.recordResult(false)
   }
@@ -37,6 +63,7 @@ test('test reorganize: same number of incorrect', () => {
 })
 
 test('test reorganize: stable sort incorrect cards', () => {
+  original = reset(original)
   for (const card of original) {
     card.recordResult(true)
   }
@@ -53,6 +80,7 @@ test('test reorganize: stable sort incorrect cards', () => {
 })
 
 test('test reorganize: stable sort correct cards', () => {
+  original = reset(original)
   for (const card of original) {
     card.recordResult(true)
   }
@@ -70,6 +98,7 @@ test('test reorganize: stable sort correct cards', () => {
 })
 
 test('test reorganize: some cards more incorect', () => {
+  original = reset(original)
   for (const card of original) {
     card.recordResult(false)
   }
@@ -94,5 +123,36 @@ test('test reorganize: some cards more incorect', () => {
 
   for (var i = 3; i < original.length - 1; i++) {
     expect(reorganized[i + 1].getCard().equals(original[i].getCard())).toBeTruthy()
+  }
+})
+
+test('test reorganize: reorganize twice', () => {
+  original = reset(original)
+  for (const card of original) {
+    card.recordResult(true)
+  }
+  original[2].clearResults()
+  original[2].recordResult(false)
+  original[cards.length - 1].clearResults()
+  original[cards.length - 1].recordResult(false)
+  const reorganized1 = sorter.reorganize(original)
+  expect(reorganized1[0].getCard().equals(original[2].getCard())).toBeTruthy()
+  expect(reorganized1[1].getCard().equals(original[cards.length - 1].getCard())).toBeTruthy()
+  expect(reorganized1[2].getCard().equals(original[0].getCard())).toBeTruthy()
+  expect(reorganized1[3].getCard().equals(original[1].getCard())).toBeTruthy()
+  for (var i = 3; i < original.length - 1; i++) {
+    expect(reorganized1[i + 1].getCard().equals(original[i].getCard())).toBeTruthy()
+  }
+  for (const card of original) {
+    if (card.getCard().equals(original[cards.length - 1].getCard())) card.recordResult(false)
+    else card.recordResult(true)
+  }
+  const reorganized2 = sorter.reorganize(reorganized1)
+  expect(reorganized2[0].getCard().equals(original[cards.length - 1].getCard())).toBeTruthy()
+  expect(reorganized2[1].getCard().equals(original[2].getCard())).toBeTruthy()
+  expect(reorganized2[2].getCard().equals(original[0].getCard())).toBeTruthy()
+  expect(reorganized2[3].getCard().equals(original[1].getCard())).toBeTruthy()
+  for (i = 3; i < original.length - 1; i++) {
+    expect(reorganized2[i + 1].getCard().equals(original[i].getCard())).toBeTruthy()
   }
 })
