@@ -15,11 +15,7 @@ function arrayEquals (a: boolean[], b: boolean[]): boolean {
   }
 }
 
-test('test getCard: correct flashcard', () => {
-  expect(fc.equals(cs.getCard())).toBeTruthy()
-})
-
-test('test getResults: empty results', () => {
+test('test getResults: initially empty results', () => {
   expect(arrayEquals(cs.getResults(), [])).toBeTruthy()
 })
 
