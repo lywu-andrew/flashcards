@@ -3,7 +3,7 @@ import { newFlashCard } from '../src/cards/flashcard'
 const fc = newFlashCard('Question', 'Answer')
 
 test('test trailing whitespace: correct answer has whitespace', () => {
-  expect(fc.checkSuccess('Answerr ')).toBeTruthy()
+  expect(fc.checkSuccess('Answer ')).toBeTruthy()
 })
 
 test('test leading whitespace: correct answer has whitespace', () => {
