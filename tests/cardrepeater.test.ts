@@ -70,11 +70,44 @@ test('test repeater reorganize: all incorrect', () => {
   expect(reorganized.length === 7).toBeTruthy()
 })
 
+test('test repeater reorganize: need 1 correct pass', () => {
+  const repeaterone = newRepeatingCardOrganizer(1)
+  original = reset(original)
+  for (const card of original) {
+    card.recordResult(true)
+  }
+  var reorganized = repeaterone.reorganize(original)
+  expect(reorganized.length === 0).toBeTruthy()
+})
+
+test('test repeater reorganize: need 1 correct pass + incorrect answers', () => {
+  const repeaterone = newRepeatingCardOrganizer(1)
+  original = reset(original)
+  for (const card of original) {
+    card.recordResult(true)
+  }
+  original[2].clearResults()
+  original[2].recordResult(false)
+  original[cards.length - 1].clearResults()
+  original[cards.length - 1].recordResult(false)
+  var reorganized = repeaterone.reorganize(original)
+  expect(reorganized.length === 2).toBeTruthy()
+  original[2].recordResult(true)
+  original[cards.length - 1].recordResult(true)
+  reorganized = repeaterone.reorganize(reorganized)
+  expect(reorganized.length === 0).toBeTruthy()
+})
+
 test('test repeater reorganize: need 2 correct passes', () => {
   original = reset(original)
   for (const card of original) {
     card.recordResult(true)
   }
-  const reorganized = repeater.reorganize(original)
+  var reorganized = repeater.reorganize(original)
   expect(reorganized.length === 7).toBeTruthy()
+  for (const card of original) {
+    card.recordResult(true)
+  }
+  reorganized = repeater.reorganize(reorganized)
+  expect(reorganized.length === 0).toBeTruthy()
 })

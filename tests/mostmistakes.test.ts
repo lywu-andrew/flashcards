@@ -16,17 +16,6 @@ function reset (crds: CardStatus[]): CardStatus[] {
   return crds
 }
 
-test('test reorganize: all cards correct', () => {
-  original = reset(original)
-  for (const card of original) {
-    card.recordResult(true)
-  }
-  const reorganized = sorter.reorganize(original)
-  for (var i = 0; i < original.length; i++) {
-    expect(reorganized[i].getCard().equals(original[i].getCard()))
-  }
-})
-
 test('test reorganize: no cards', () => {
   const empty: CardStatus[] = []
   const reorganized = sorter.reorganize(empty)
