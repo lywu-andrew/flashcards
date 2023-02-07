@@ -6,6 +6,10 @@ The instructions can be found in `README.md` in the top level directory
 
 After you make changes to `Main.java`, you might notice that the build fails due to a checkstyle error. This is due to the `// TODO` comment; it will succeed when that comment is removed. You will probably see builds fail quite a bit more often during this course, as you push your own code. Keep an eye on this; it is often a helpful signal that something is broken or imperfect, so learning to read the logs to figure out why it failed is a helpful skill. Naturally, the build should not fail when you turn in your assignments.
 
+## Testing Strategy
+
+The tests make use of branch coverage testing, which is a method of checking every possible branch from each decision point. This strategy ensures that all branches of code are reached, executed, and therefore tested. For example, when testing the method checkNewAchievements, the testing code goes through each possibility of an achievement being in achieved and if the achievement is achieved by checking the card deck. This technique was chosen since we wanted to make sure no branch leads to abnormal behavior in the code.
+
 ## Specification vs structure testing
 
 With specification testing, the specifications included all the expected behaviors of functions or methods, so I used them as a guide to create my tests. For example, the RecentMistakesFirstSorter class's reorganize function used a stable sort and the NonRepeatingCardOrganizer marks completion with any answer. These specs made it much easier for me to know what to test for. In addition, clients typically are only exposed to interfaces, so specification testing is the most important to ensure clients receive expected behaviors.
